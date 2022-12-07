@@ -2,8 +2,8 @@
 import UpwardIcon from "../UpwardIcon.vue";
 import DeleteIconField from "../DeleteIconField.vue";
 import DownwardIcon from "../DownwardIcon.vue";
-import { useDialogStore } from "../../../stores/dialogs"
-import { useFormBuilderStore } from "../../../stores/formBuilder"
+import { useDialogStore } from "@/stores/dialogs"
+import { useFormBuilderStore } from "@/stores/formBuilder"
 import { ref } from "vue";
 
 const dialogStore = useDialogStore();
@@ -15,7 +15,7 @@ defineProps({
     index: null,
 })
 
-const editRadioField = (index: null) => {
+const editRadioField = (index: any) => {
     dialogStore.$state.fileUploadDialog.isAppear = !dialogStore.$state.fileUploadDialog.isAppear
     dialogStore.$state.fileUploadDialog.action = "edit";
     dialogStore.$state.fileUploadDialog.index = index;

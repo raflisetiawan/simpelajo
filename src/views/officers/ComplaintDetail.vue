@@ -3,7 +3,7 @@ import { onMounted, ref } from "vue";
 import { getComplaintById } from "../../services/officers/complaint";
 import { useRoute } from "vue-router";
 
-const route = useRoute();
+const route: any = useRoute();
 const complaint: any = ref(null);
 const loading = ref(true);
 const imageDialog = ref(false);

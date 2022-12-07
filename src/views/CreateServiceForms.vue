@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { reactive } from "vue";
-import MakeServiceFeatures from "../components/MakeServiceFeatures.vue";
 
 const data = reactive({
   name: "",
@@ -13,9 +12,6 @@ const data = reactive({
       <div class="row">
         <div class="col-md-7 col-sm-12 col-xs-12">
           <q-input label="Nama Administrasi Layanan" v-model="data.name" />
-        </div>
-        <div class="col-md-7 col-sm-12 col-xs-12 q-mt-md text-center">
-          <MakeServiceFeatures />
         </div>
       </div>
     </q-form>

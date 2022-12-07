@@ -1,4 +1,4 @@
-function isLetter(c) {
+function isLetter(c: any) {
   return c.toLowerCase() != c.toUpperCase();
 }
 

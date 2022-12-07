@@ -1,7 +1,7 @@
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 const auth = getAuth();
-const signup = async (email, password) => {
+const signup = async (email: string, password: string) => {
   return createUserWithEmailAndPassword(auth, email, password)
     .then(async (userCredential) => {
       return userCredential.user;

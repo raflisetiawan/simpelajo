@@ -11,7 +11,7 @@ import {
 const db = getFirestore();
 
 const getAllComplaint = async () => {
-  let data = [];
+  let data: any = [];
   const q = query(collection(db, "complaints"), orderBy("createdAt", "desc"));
   const querySnapshot = await getDocs(q);
   try {
@@ -27,7 +27,7 @@ const getAllComplaint = async () => {
   return data;
 };
 
-const getComplaintById = async (id) => {
+const getComplaintById = async (id: string) => {
   const docRef = doc(db, "complaints", id);
   const docSnap = await getDoc(docRef);
 

@@ -1,7 +1,7 @@
 import getUser from "./getUser";
 
-const redirectToRoleFeature = async (uid) => {
-  const userData = await getUser(uid);
+const redirectToRoleFeature = async (uid: string) => {
+  const userData: any = await getUser(uid);
   if (userData.role === "admin") {
     return "admin";
   } else if (userData.role === "officer") {

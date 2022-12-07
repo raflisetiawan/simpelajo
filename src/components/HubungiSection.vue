@@ -4,13 +4,13 @@ import { insertContact } from "../services/officers/contact"
 import { getNumberAndEmail } from "../services/admin/numberandemail";
 import { phone } from "phone";
 
-const form = reactive({
+const form: any = reactive({
   name: "",
   message: ""
 })
-const numberAndEmail = ref([]);
+const numberAndEmail: any = ref([]);
 const loading = ref(false)
-const phoneNumber = ref("");
+const phoneNumber: any = ref("");
 onMounted(async () => {
   numberAndEmail.value = await getNumberAndEmail();
   phoneNumber.value = phone(numberAndEmail.value[0].data.number, { country: 'ID' }).phoneNumber;
