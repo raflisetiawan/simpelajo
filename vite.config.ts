@@ -16,15 +16,15 @@ export default defineConfig({
   }),
     VitePWA({
       devOptions: {
-        enabled: true,
+        enabled: true
       },
       mode: "development",
       registerType: "autoUpdate",
       base: "/",
-      scope: ".",
       srcDir: "src",
       filename: "sw.ts",
       includeAssets: ["/favicon.png"],
+      strategies: "injectManifest",
       manifest: {
         prefer_related_applications: true,
         name: "Simpel Ajo",

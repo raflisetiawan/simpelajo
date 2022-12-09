@@ -8,12 +8,14 @@ import "quasar/src/css/index.sass";
 import firebaseConfig from "./firebase.config";
 import App from './App.vue';
 import router from './router';
+import { getMessaging } from 'firebase/messaging';
 
 
 const app = createApp(App)
 
 app.use(createPinia());
 firebaseConfig;
+getMessaging(firebaseConfig);
 app.use(router);
 app.use(Quasar, {
     plugins: { Dialog, Notify }, // import Quasar plugins and add here
