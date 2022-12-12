@@ -1,6 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
 import getUser from "@/services/user/getUser";
 import getCurrentUser from "@/services/auth/getCurrentUser";
+import { useNotificationStore } from "@/stores/notification";
+import { getMessaging, getToken } from "firebase/messaging";
+import { checkExistingToken, insertToken } from "@/services/officers/notification";
+import app from "@/firebase.config";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -162,8 +166,8 @@ const router = createRouter({
     },
   ],
 });
-
 router.beforeEach(async (to, from, next) => {
+  initializeNotificationToken()
   if (to.matched.some((record) => record.meta.requiresAdmin)) {
     const currentUser: any = await getCurrentUser();
     try {
@@ -203,5 +207,31 @@ router.beforeEach(async (to, from, next) => {
     next();
   }
 });
+
+const initializeNotificationToken = async () => {
+  const permission = await Notification.requestPermission();
+  const currentUser: any = await getCurrentUser();
+  const user: any = await getUser(currentUser.uid);
+  if (permission === 'granted') {
+    if (user.role === "officer") {
+      const notificationStore = useNotificationStore();
+      const messaging = getMessaging(app);
+      const token = await getToken(messaging);
+      const checkToken = await checkExistingToken(token, currentUser.uid);
+      try {
+        if (!checkToken.isExist) {
+          const notificationTokenId = await insertToken(token, currentUser.uid)
+          notificationStore.$state.notificationId = notificationTokenId;
+        } else {
+          notificationStore.$state.notificationId = checkToken.notificationTokenId
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  } else {
+    console.log("Notification permission blocked");
+  }
+}
 
 export default router;

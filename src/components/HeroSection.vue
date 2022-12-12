@@ -13,7 +13,7 @@ const autoplay = ref(true);
       <q-carousel-slide :name="1" img-src="assets/3.jpg" swipeable>
         <div class="absolute-center custom-caption text-white">
           <div :class="$q.screen.lt.md ? `text-h4 text-shadow` : `text-h2 text-shadow`">Selamat Datang di Website Simpel
-            Aja</div>
+            Ajo</div>
           <div class="text-subtitle1 text-shadow">Sistem Pelayanan Online Desa Sukorejo berbasis Website untuk
             Kebutuhan Administrasi, Aduan, dan Aspirasi Masyarakat Dalam Upaya
             Awal Menuju Smart Village</div>
@@ -22,7 +22,7 @@ const autoplay = ref(true);
       <q-carousel-slide :name="2" img-src="assets/1.jpg" swipeable>
         <div class="absolute-center custom-caption text-white">
           <div :class="$q.screen.lt.md ? `text-h4 text-shadow` : `text-h2 text-shadow`">Selamat Datang di Website Simpel
-            Aja</div>
+            Ajo</div>
           <div class="text-subtitle1 text-shadow">Sistem Pelayanan Online Desa Sukorejo berbasis Website untuk
             Kebutuhan Administrasi, Aduan, dan Aspirasi Masyarakat Dalam Upaya
             Awal Menuju Smart Village</div>

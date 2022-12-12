@@ -16,11 +16,15 @@ import {
 } from "firebase/firestore";
 import { v4 as uuidv4 } from "uuid";
 import { getServiceBySlug } from "../admin/service";
-import { useDocumentStore } from "../../stores/document";
+import { useDocumentStore } from "@/stores/document";
 import { Notify } from "quasar";
-import { useDialogStore } from "../../stores/dialogs";
+import { useDialogStore } from "@/stores/dialogs";
+import { useNotificationStore } from "@/stores/notification";
+import { officerRole } from "@/services/user/checkRole";
+import {getTokensByUserId} from "@/services/officers/notification";
 
 const documentStore = useDocumentStore();
+const notificationStore = useNotificationStore();
 const dialogStore = useDialogStore();
 const storage = getStorage();
 const db = getFirestore();
@@ -60,7 +64,7 @@ const insertDocumentToStorage = async (file: any, letter: any, data: any) => {
           break;
       }
     },
-    () => {
+    async () => {
       // Upload completed successfully, now we can get the download URL
       getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
         await insertDocument(
@@ -71,6 +75,25 @@ const insertDocumentToStorage = async (file: any, letter: any, data: any) => {
           data
         );
       });
+        const officers = await officerRole()
+        try {
+          officers.forEach(async(officerId) => {
+            const tokens = await getTokensByUserId(officerId)
+            try {
+              tokens.forEach(async(token) => {
+                await notificationStore.pushNotification({
+                  title: "Warga desa telah membuat surat",
+                  body: "Klik untuk melihatnya",
+                  icon: "https://firebasestorage.googleapis.com/v0/b/simpelajo.appspot.com/o/dACACA-removebg-preview.png?alt=media&token=c1121164-f74d-4b66-bbf0-8b138e1d136e"
+                }, token)
+              })
+            } catch (error) {
+              console.log(error)
+            }
+          })
+        } catch (error) {
+          console.log(error)
+        }
       Notify.create({
         message:
           "Dokumen anda sudah di buat, mohon menunggu respon dari petugas",
@@ -88,7 +111,6 @@ const insertDocument = async (
   fileName: any,
   data: any
 ) => {
-  console.log(data);
   const response = await addDoc(collection(db, "documents"), {
     downloadURL,
     serviceId,

@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { useDialogStore } from '../../stores/dialogs';
+import { useDialogStore } from '@/stores/dialogs';
 import { phone } from 'phone';
 import { ref } from 'vue';
 const dialogStore = useDialogStore();
 const props = defineProps(["documentData"]);
 const phoneNumber: any = ref(phone(props.documentData.whatsapp, { country: 'ID' }).phoneNumber);
-phoneNumber.value = phoneNumber.value.replace("+", "");
+if (props.documentData.whatsapp !== undefined) {
+    phoneNumber.value = phoneNumber.value.replace("+", "");
+}
 </script>
 <template>
     <q-dialog v-model="dialogStore.$state.isSendViaDialog">
