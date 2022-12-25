@@ -1,5 +1,5 @@
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { useUserStore } from "../../stores/user";
+import { useUserStore } from "@/stores/user";
 import getUser from "../user/getUser";
 
 const getCurrentUser = () => {

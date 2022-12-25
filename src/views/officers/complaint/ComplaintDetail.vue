@@ -1,14 +1,19 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-import { getComplaintById } from "../../services/officers/complaint";
+import { getComplaintById } from "@/services/officers/complaint";
 import { useRoute } from "vue-router";
+import VueEasyLightbox from "vue-easy-lightbox";
 
 const route: any = useRoute();
 const complaint: any = ref(null);
 const loading = ref(true);
-const imageDialog = ref(false);
+const imageDialog = () => {
+    visible.value = true;
+}
+const visible = ref(false);
 onMounted(async () => {
     complaint.value = await getComplaintById(route.params.id);
+    // complaint.value.downloadURL = [`${complaint.value.downloadURL}`]
     loading.value = false;
 })
 </script>
@@ -17,7 +22,9 @@ onMounted(async () => {
     <div class="container q-pa-md" v-else>
         <div class="row q-mb-md" v-if="complaint.downloadURL">
             <div class="col-md-12 col-xs-12 col-sm-12 text-center">
-                <q-img @click="imageDialog = true" :src="complaint.downloadURL" spinner-color="primary" class="image" />
+                <q-img @click="imageDialog" :src="complaint.downloadURL" spinner-color="primary" class="image" />
+                <VueEasyLightbox move-disabled :visible="visible" :imgs="complaint.downloadURL"
+                    @hide="visible = false" />
             </div>
         </div>
         <div class="row q-mb-md">
@@ -37,12 +44,6 @@ onMounted(async () => {
         </div>
     </div>
 
-    <q-dialog v-model="imageDialog" full-width full-height>
-        <q-card class="card-dialog">
-            <q-btn icon="close" flat shadow round dense v-close-popup class="float-right" />
-            <q-img @click="imageDialog = true" :src="complaint.downloadURL" spinner-color="primary" />
-        </q-card>
-    </q-dialog>
 
 </template>
 

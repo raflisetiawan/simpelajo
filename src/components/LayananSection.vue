@@ -9,10 +9,10 @@ services.value = await getServicesLimitBySix();
 </script>
 <template>
   <section id="layanan" class="q-pa-md">
-    <div class="container">
+    <div class="container q-mb-md">
       <div class="row">
         <div class="col-12 text-center">
-          <div class="text-h5">LAYANAN</div>
+          <div class="text-h5">LAYANAN ADMINISTRASI SURAT KETERANGAN</div>
         </div>
       </div>
       <div class="row justify-center">

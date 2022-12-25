@@ -115,8 +115,23 @@ const getServicesLimitBySix = async () => {
   return data;
 };
 
+const filterLetter = async (keyword: string) => {
+  let data : any= [];
+  const q = query(collection(db, "services"), where("name", "==", keyword));
+
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    data.push({
+      id: doc.id,
+      data: doc.data()
+    })
+  });
+  return data;
+} 
+
 export {
   createService,
+  filterLetter,
   getAllServices,
   deleteService,
   updateService,

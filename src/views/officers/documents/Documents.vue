@@ -1,19 +1,21 @@
-<script setup lang="ts">
-import { onMounted, ref } from "vue";
+<script setup lang="ts" async>
 import { getAllDocument } from "@/services/officers/document";
 import timeSince from "@/utils/timeSince";
+import DocumentsBar from "@/components/DocumentsBar.vue";
+import { useDocumentStore } from "@/stores/document";
+import { ref } from "vue";
 
+const documentStore = useDocumentStore();
 const documents: any = ref(null);
-
-onMounted(async () => {
-    documents.value = await getAllDocument();
-})
+documents.value = await getAllDocument();
+documentStore.$state.documents = documents.value;
 </script>
 
 <template>
     <div class="container q-pa-md">
+        <DocumentsBar />
         <div class="row">
-            <template v-for="document in documents" :key="document.id">
+            <template v-for="document in documentStore.$state.documents" :key="document.id">
                 <div class="col-md-4 col-sm-12 col-xs-12">
                     <q-card bordered class="q-ma-sm">
                         <q-card-section>

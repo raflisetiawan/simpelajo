@@ -70,7 +70,8 @@ const onSubmit = async () => {
                   'Password tidak sama',
               ]" class="q-px-md" type="password" />
               <q-btn color="primary" :loading="loading" type="submit" class="q-mt-md q-ml-md">Daftar</q-btn>
-              <q-btn flat color="blue" class="q-mt-md q-ml-lg" to="signin">sudah punya akun? masuk</q-btn>
+              <q-btn flat color="blue" class="q-mt-md q-ml-lg" :to="{ name: 'signin' }">sudah punya akun? masuk</q-btn>
+              <q-btn flat color="blue" class="q-mt-md q-ml-lg" :to="{ name: 'Home' }">beranda</q-btn>
             </div>
           </q-card>
         </q-form>

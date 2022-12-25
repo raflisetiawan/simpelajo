@@ -20,9 +20,10 @@ const signOut = () => {
 </script>
 
 <template>
-  <q-btn flat icon="logout" @click="signOut">
+  <div @click="signOut">
+    Keluar
     <q-tooltip>
       Keluar
     </q-tooltip>
-  </q-btn>
+  </div>
 </template>

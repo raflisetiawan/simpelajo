@@ -26,7 +26,7 @@ const onSubmit = async () => {
 }
 </script>
 <template>
-  <section id="hubungi" class="q-pa-md bg-krem">
+  <section id="hubungi" class="q-pa-md">
     <div class="container">
       <div class="row">
         <div class="col-12 text-center">

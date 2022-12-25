@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import SignOutButton from "@/components/SignOutButton.vue";
 import { useRoute } from "vue-router";
 import { useDrawerStore } from "@/stores/drawer";
+import ThreePoints from "@/components/ThreePoints.vue";
 
 const drawerStore = useDrawerStore();
 const route = useRoute();
@@ -22,7 +22,7 @@ const toggleShowDrawer = () => {
           @click="toggleShowDrawer">
         </q-btn>
       </q-toolbar-title>
-      <SignOutButton />
+      <ThreePoints />
     </q-toolbar>
   </q-header>
 </template>

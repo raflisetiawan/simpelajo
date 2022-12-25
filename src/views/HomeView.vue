@@ -2,6 +2,7 @@
 import HeroSection from "@/components/HeroSection.vue";
 import HubungiSection from "@/components/HubungiSection.vue";
 import ServicesSkeleton from "@/components/skeletons/ServicesSkeleton.vue";
+import MoveLetter from "./MoveLetter.vue";
 import { defineAsyncComponent, onMounted } from "vue";
 const LayananSection = defineAsyncComponent(() => import("@/components/LayananSection.vue"));
 
@@ -16,6 +17,7 @@ onMounted(() => document.title = "Simpel Ajo - Beranda");
         <ServicesSkeleton />
       </template>
     </Suspense>
+    <MoveLetter />
     <HubungiSection />
   </main>
 </template>

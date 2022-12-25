@@ -1,12 +1,10 @@
-<script setup lang="ts">
-import { onMounted, ref } from "vue";
+<script setup lang="ts" async>
+import { ref } from "vue";
 import { getAllContact } from "@/services/officers/contact";
 import timeSince from "@/utils/timeSince";
 const contacts: any = ref(null);
 
-onMounted(async () => {
-    contacts.value = await getAllContact();
-})
+contacts.value = await getAllContact();
 </script>
 
 <template>

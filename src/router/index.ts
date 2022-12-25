@@ -76,12 +76,12 @@ const router = createRouter({
         {
           path: "contact",
           name: "Contact",
-          component: () => import("@/views/officers/Contact.vue"),
+          component: () => import("@/views/officers/contact/Index.vue"),
         },
         {
           path: "document",
           name: "Documents",
-          component: () => import("@/views/officers/Documents.vue"),
+          component: () => import("@/views/officers/documents/Index.vue"),
         },
         {
           path: "document/:id",
@@ -91,12 +91,12 @@ const router = createRouter({
         {
           path: "complaint",
           name: "Complaint",
-          component: () => import("@/views/officers/Complaint.vue"),
+          component: () => import("@/views/officers/complaint/Index.vue"),
         },
         {
           path: "complaint/:id",
           name: "ComplaintDetail",
-          component: () => import("@/views/officers/ComplaintDetail.vue"),
+          component: () => import("@/views/officers/complaint/ComplaintDetail.vue"),
         },
       ],
     },

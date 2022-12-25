@@ -11,5 +11,15 @@ export const useDocumentStore = defineStore("document", {
       whatsapp: "",
       email: "",
     },
+    documents: [
+      {
+        id: "",
+        data: {
+          serviceName: "",
+          createdAt: "",
+          status: ""
+        }
+      }
+    ]
   }),
 });

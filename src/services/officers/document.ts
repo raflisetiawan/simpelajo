@@ -166,8 +166,47 @@ const insertLetterNumber = async (
   );
 };
 
+const filterDocuments = async(isAccepted: boolean, isPending: boolean, isRejected: boolean) => {
+  let data: any = [];
+  const documentsRef = collection(db, "documents");
+  if(isAccepted){
+    const q = query(documentsRef, where("status", "==", "accept"));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((document) => {
+      data.push({
+        id: document.id,
+        data: document.data()
+      });
+    })
+  }
+  if(isPending){
+    const q = query(documentsRef, where("status", "==", "pending"));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((document) => {
+      data.push({
+        id: document.id,
+        data: document.data()
+      });
+    })
+  }
+  if(isRejected){
+    const q = query(documentsRef, where("status", "==", "reject"));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((document) => {
+      data.push({
+        id: document.id,
+        data: document.data()
+      });
+    })
+  }
+  
+  if(isAccepted === false && isPending === false && isRejected === false) return 0;
+  else return data;
+}
+
 export {
   getAllDocument,
+  filterDocuments,
   getDocument,
   getPendingDocuments,
   updateStatus,

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import SignOutButton from "@/components/SignOutButton.vue";
-import { useUserStore } from "../stores/user";
+import { useUserStore } from "@/stores/user";
 import { useRouter } from "vue-router";
+import ThreePoints from "@/components/ThreePoints.vue";
 const router = useRouter();
 const toHome = () => router.push({ name: 'Home' })
 const userStore = useUserStore();
@@ -23,6 +23,8 @@ const userStore = useUserStore();
     <q-btn flat dense label="Keluhan" :class="$q.screen.gt.xs ? `q-px-md black-text` : `black-text`"
       :to="{ name: 'Keluhan' }" />
     <q-btn flat dense label="Hubungi" to="/#hubungi" :class="$q.screen.gt.xs ? `q-px-md black-text` : `black-text`" />
-    <SignOutButton v-if="userStore.$state.user !== null" />
+    <ThreePoints v-if="userStore.$state.user !== null" />
+    <q-btn v-else icon="login" flat dense :to="{ name: 'SignIn' }"></q-btn>
+    <!-- <SignOutButton v-if="userStore.$state.user !== null" /> -->
   </q-toolbar>
 </template>

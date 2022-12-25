@@ -73,7 +73,8 @@ const onSubmit = async () => {
                 </template>
               </q-input>
               <q-btn color="primary" class="q-mt-md q-ml-md" type="submit" :loading="loading">Masuk</q-btn>
-              <q-btn flat color="blue" class="q-mt-md q-ml-lg" to="signup">belum punya akun? daftar</q-btn>
+              <q-btn flat color="blue" class="q-mt-md q-ml-lg" :to="{ name: 'SignUp' }">belum punya akun? daftar</q-btn>
+              <q-btn flat color="blue" class="q-mt-md q-ml-lg" :to="{ name: 'Home' }">beranda</q-btn>
             </div>
           </q-card>
         </div>
