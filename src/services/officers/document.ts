@@ -200,8 +200,11 @@ const filterDocuments = async(isAccepted: boolean, isPending: boolean, isRejecte
     })
   }
   
-  if(isAccepted === false && isPending === false && isRejected === false) return 0;
-  else return data;
+  if(isAccepted === false && isPending === false && isRejected === false) {
+    console.log('ok');
+    data = await getAllDocument();
+  }
+  return data;
 }
 
 export {

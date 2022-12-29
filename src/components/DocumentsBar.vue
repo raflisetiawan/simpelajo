@@ -13,7 +13,6 @@ const status = reactive({
 })
 
 const filterDocumentsFromService = async () => {
-
     const documents = await filterDocuments(status.isAccepted, status.isPending, status.isRejected);
     if (documents !== 0) documentStore.$state.documents = documents;
     filterDialog.value = false;
