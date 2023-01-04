@@ -75,6 +75,11 @@ const formBuilderStore = useFormBuilderStore();
                 <q-card-section class="q-pt-none">
                     <q-checkbox v-model="letterNumber" label="Menggunakan nomor surat?" />
                 </q-card-section>
+                <q-card-section class="q-pt-none">
+                    <q-btn v-if="formBuilderStore.$state.editServiceDialog.isDialog" class="bg-primary text-white"
+                        :to="{ name: 'UpdateFormById', params: { id: formBuilderStore.$state.editServiceDialog.id } }">Edit
+                        Form</q-btn>
+                </q-card-section>
 
                 <q-card-actions align="right" class="text-primary">
                     <q-btn flat label="Cancel" @click="onCancel" />

@@ -3,7 +3,10 @@ import getUser from "@/services/user/getUser";
 import getCurrentUser from "@/services/auth/getCurrentUser";
 import { useNotificationStore } from "@/stores/notification";
 import { getMessaging, getToken } from "firebase/messaging";
-import { checkExistingToken, insertToken } from "@/services/officers/notification";
+import {
+  checkExistingToken,
+  insertToken,
+} from "@/services/officers/notification";
 import app from "@/firebase.config";
 
 const router = createRouter({
@@ -96,7 +99,8 @@ const router = createRouter({
         {
           path: "complaint/:id",
           name: "ComplaintDetail",
-          component: () => import("@/views/officers/complaint/ComplaintDetail.vue"),
+          component: () =>
+            import("@/views/officers/complaint/ComplaintDetail.vue"),
         },
       ],
     },
@@ -155,6 +159,11 @@ const router = createRouter({
               name: "CreateFormById",
               component: () => import("@/views/CreateForm.vue"),
             },
+            {
+              path: "edit/:id",
+              name: "UpdateFormById",
+              component: () => import("@/views/admin/forms/EditForm.vue"),
+            },
           ],
         },
       ],
@@ -167,7 +176,7 @@ const router = createRouter({
   ],
 });
 router.beforeEach(async (to, from, next) => {
-  initializeNotificationToken()
+  initializeNotificationToken();
   if (to.matched.some((record) => record.meta.requiresAdmin)) {
     const currentUser: any = await getCurrentUser();
     try {
@@ -212,7 +221,7 @@ const initializeNotificationToken = async () => {
   const permission = await Notification.requestPermission();
   const currentUser: any = await getCurrentUser();
   const user: any = await getUser(currentUser.uid);
-  if (permission === 'granted') {
+  if (permission === "granted") {
     if (user.role === "officer") {
       const notificationStore = useNotificationStore();
       const messaging = getMessaging(app);
@@ -220,18 +229,19 @@ const initializeNotificationToken = async () => {
       const checkToken = await checkExistingToken(token, currentUser.uid);
       try {
         if (!checkToken.isExist) {
-          const notificationTokenId = await insertToken(token, currentUser.uid)
+          const notificationTokenId = await insertToken(token, currentUser.uid);
           notificationStore.$state.notificationId = notificationTokenId;
         } else {
-          notificationStore.$state.notificationId = checkToken.notificationTokenId
+          notificationStore.$state.notificationId =
+            checkToken.notificationTokenId;
         }
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     }
   } else {
     console.log("Notification permission blocked");
   }
-}
+};
 
 export default router;

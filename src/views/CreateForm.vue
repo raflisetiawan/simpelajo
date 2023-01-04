@@ -10,10 +10,9 @@ const Page = defineAsyncComponent(() =>
 <template>
   <Drawer />
   <Suspense>
-    <!-- component with nested async dependencies -->
     <Page />
     <template #fallback>
-      <q-spinner color="primary" size="3em" />
+      <q-linear-progress indeterminate />
     </template>
   </Suspense>
 </template>

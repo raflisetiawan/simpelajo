@@ -9,9 +9,9 @@ import DateDialog from "./Date/DateDialog.vue";
 import DropdownDialog from "./dropdown/DropdownDialog.vue";
 import FileUploadDialog from "./file_upload/FileUploadDialog.vue";
 import { useRoute, useRouter } from "vue-router"
-import { createForm } from "../../services/admin/form"
-import { getService, getServiceBySlug } from "../../services/admin/service"
-import { checkFormIsExistByServiceId } from "../../services/admin/form";
+import { createForm, editForm } from "@/services/admin/form"
+import { getService, getServiceBySlug } from "@/services/admin/service"
+import { checkFormIsExistByServiceId } from "@/services/admin/form";
 import { useQuasar } from "quasar";
 import slugify from "slugify";
 import NumberDialog from "@/components/number/NumberDialog.vue";
@@ -143,6 +143,24 @@ const onSubmit = async () => {
     }
   }
 }
+const onUpdate = async () => {
+  if (formBuilderStore.$state.formFields === null || formBuilderStore.$state.formFields.length === 0) {
+    formBuilderStore.$state.isFormFieldNull = true;
+    quasar.notify({
+      color: "red",
+      message: "Form harus diisi",
+      position: "top-right"
+    })
+    return false;
+  }
+  else {
+    await editForm(formBuilderStore.$state.formFields, route.params.id)
+    formBuilderStore.$state.formFields = [{}];
+    // router.push({ name: "CreateFormService", params: { slug } })
+
+  }
+
+}
 
 </script>
 
@@ -160,7 +178,9 @@ const onSubmit = async () => {
     <q-btn label="File upload" outline icon="cloud_upload" class="q-ml-sm q-mt-sm" @click="onClickFileUpload" />
     <q-btn label="Number" outline icon="pin" class="q-ml-sm q-mt-sm" @click="onClickNumber" />
     <q-space />
-    <q-btn label="Submit" color="primary" class="q-mt-md q-ml-sm" @click="onSubmit" />
+    <q-btn label="Edit" color="primary" class="q-mt-md q-ml-sm" @click="onUpdate"
+      v-if="route.name == 'UpdateFormById'" />
+    <q-btn label="Submit" v-else color="primary" class="q-mt-md q-ml-sm" @click="onSubmit" />
     <DialogTextField />
     <CheckboxDialog />
     <RadioDialog />

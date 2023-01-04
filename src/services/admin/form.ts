@@ -18,7 +18,7 @@ const createForm = async (data: any, serviceId: string) => {
   });
 };
 
-const getFormByServiceId = async (serviceId: string) => {
+const getFormByServiceId = async (serviceId: any) => {
   let data;
   const q = query(collection(db, "forms"), where("serviceId", "==", serviceId));
   const querySnapshot = await getDocs(q);
@@ -82,11 +82,21 @@ const getServiceHasNotFormData = async (id: string) => {
   return data;
 };
 
+const editForm = async (data: any, formId: string) => {
+  console.log(formId);
+  console.log(data);
+  // await addDoc(collection(db, "forms"), {
+  //   data,
+  //   serviceId,
+  //   createdAt: Date.now(),
+  // });
+};
 export {
   createForm,
   checkFormIsExistByServiceId,
   getFormByServiceId,
   deleteForm,
+  editForm,
   getServiceHasNotFormData,
   getAllForms,
   getServiceHasNotForm,

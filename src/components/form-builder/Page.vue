@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { getFormByServiceId } from "@/services/admin/form";
 import { useFormBuilderStore } from "@/stores/formBuilder";
 import TextField from "./text-fields/TextField.vue";
 import ParagraphField from "./paragraph/ParagraphField.vue";
@@ -12,10 +13,12 @@ import FileUploadField from "./file_upload/FileUploadField.vue";
 import { getService, getAllServices } from "@/services/admin/service"
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router"
-import { getAllForms } from "../../services/admin/form";
+import { getAllForms } from "@/services/admin/form";
 import NumberField from "../number/NumberField.vue";
 
 const formBuilderStore = useFormBuilderStore();
+const formFields: any = ref(formBuilderStore.$state.formFields);
+const loadingFormUpdate = ref(true);
 
 const route: any = useRoute()
 const service: any = ref()
@@ -24,7 +27,15 @@ onMounted(async () => {
   if (route.params.id !== undefined) {
     service.value = await getService(route.params.id);
     serviceName.value.push(service.value.name);
+    if (route.name == 'UpdateFormById') {
+      const form: any = await getFormByServiceId(route.params.id);
+      formFields.value = form.data.data;
+      formBuilderStore.$state.formFields = form.data.data;
+      formFields.value = formBuilderStore.$state.formFields;
+      loadingFormUpdate.value = false;
+    }
   } else {
+    formBuilderStore.$state.formFields = [{} = {}];
     const response = await getAllServices();
     const forms: any = await getAllForms();
     const filteredService = response.filter((elem: { id: any; }) => !forms.find(({ data: { } }) => elem.id === route.params.id));
@@ -34,13 +45,17 @@ onMounted(async () => {
   }
 })
 
-const formFields: any = formBuilderStore.$state.formFields;
-
 </script>
 
 <template>
   <q-page class="q-form-builder-page">
     <div class="container q-ma-md">
+      <div class="row">
+        <div class="col">
+          <div class="text-h6" v-if="route.name == 'UpdateFormById'">Edit Form</div>
+          <div class="text-h6" v-else>Buat Form</div>
+        </div>
+      </div>
       <div class="row">
         <div class="col-md-7 col-sm-12 col-xs-12">
           <q-select v-model="formBuilderStore.$state.selectOption"
@@ -51,6 +66,10 @@ const formFields: any = formBuilderStore.$state.formFields;
             </template>
           </q-select>
           <q-select v-model="serviceName" :options="serviceName" v-else readonly />
+          <div class="">
+            <q-spinner color="primary" size="3em" class="q-ml-md q-mt-md"
+              v-if="route.name == 'UpdateFormById' && loadingFormUpdate" />
+          </div>
         </div>
       </div>
       <template v-for="(field, index) in formFields" :key="field.label">
