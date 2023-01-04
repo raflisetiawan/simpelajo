@@ -7,6 +7,7 @@ import {
   doc,
   getDocs,
   query,
+  updateDoc
 } from "firebase/firestore";
 
 const db = getFirestore();
@@ -82,14 +83,15 @@ const getServiceHasNotFormData = async (id: string) => {
   return data;
 };
 
-const editForm = async (data: any, formId: string) => {
-  console.log(formId);
-  console.log(data);
-  // await addDoc(collection(db, "forms"), {
-  //   data,
-  //   serviceId,
-  //   createdAt: Date.now(),
-  // });
+const editForm = async (data: any, serviceId: string) => {
+  const service: any = await getFormByServiceId(serviceId);
+  console.log(service);
+  const formRef = doc(db, "forms", service.id);
+
+  await updateDoc(formRef, {
+    data,
+    updatedAt: Date.now()
+  });
 };
 export {
   createForm,
