@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watchEffect } from 'vue';
 import { useFormBuilderStore } from "@/stores/formBuilder";
 import { useDialogStore } from "@/stores/dialogs";
 const formBuilderStore = useFormBuilderStore();
@@ -7,7 +7,7 @@ const dialogStore = useDialogStore();
 
 const label = ref("");
 const required = ref(false);
-const formBuilderStoreField: any = formBuilderStore.$state.formFields;
+let formBuilderStoreField: any = formBuilderStore.$state.formFields;
 
 const onSubmit = () => {
     if (dialogStore.$state.numberFieldDialog.action == 'edit') {
@@ -28,6 +28,14 @@ const onSubmit = () => {
         dialogStore.$state.numberFieldDialog.isAppear = false;
     }
 }
+
+watchEffect(() => {
+    if (formBuilderStore.$state.formFields.length !== 0) {
+        formBuilderStoreField = formBuilderStore.$state.formFields
+
+    }
+    // const formBuilderStoreLabel: any = ref(formBuilderStore.$state.formFields);
+})
 </script>
 
 <template>

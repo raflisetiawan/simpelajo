@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { useFormBuilderStore } from "../../stores/formBuilder";
-import { useDialogStore } from "../../stores/dialogs";
+import { ref, watchEffect } from "vue";
+import { useFormBuilderStore } from "@/stores/formBuilder";
+import { useDialogStore } from "@/stores/dialogs";
 const formBuilderStore = useFormBuilderStore();
 const dialogStore = useDialogStore();
 
 const label = ref("");
 const required = ref(false);
-const dialogStoreIndex: any = dialogStore.$state.labelFieldDialog.index;
-const formBuilderStoreLabel: any = formBuilderStore.$state.formFields;
+const formBuilderStoreLabel: any = ref(formBuilderStore.$state.formFields);
 
 const onSubmit = () => {
   if (dialogStore.$state.labelFieldDialog.type === "text") {
@@ -21,11 +20,11 @@ const onSubmit = () => {
       });
       dialogStore.$state.labelFieldDialog.isAppear = false;
     } else {
-      formBuilderStoreLabel[
-        dialogStoreIndex
+      formBuilderStoreLabel.value[
+        dialogStore.$state.labelFieldDialog.index
       ].label = label.value;
-      formBuilderStoreLabel[
-        dialogStoreIndex
+      formBuilderStoreLabel.value[
+        dialogStore.$state.labelFieldDialog.index
       ].required = required.value;
       dialogStore.$state.labelFieldDialog.isAppear = false;
     }
@@ -39,11 +38,11 @@ const onSubmit = () => {
       });
       dialogStore.$state.labelFieldDialog.isAppear = false;
     } else {
-      formBuilderStoreLabel[
-        dialogStoreIndex
+      formBuilderStoreLabel.value[
+        dialogStore.$state.labelFieldDialog.index
       ].label = label.value;
-      formBuilderStoreLabel[
-        dialogStoreIndex
+      formBuilderStoreLabel.value[
+        dialogStore.$state.labelFieldDialog.index
       ].required = required.value;
       dialogStore.$state.labelFieldDialog.isAppear = false;
     }
@@ -58,16 +57,24 @@ const onSubmit = () => {
       });
       dialogStore.$state.labelFieldDialog.isAppear = false;
     } else {
-      formBuilderStoreLabel[
-        dialogStoreIndex
+      formBuilderStoreLabel.value[
+        dialogStore.$state.labelFieldDialog.index
       ].label = label.value;
-      formBuilderStoreLabel[
-        dialogStoreIndex
+      formBuilderStoreLabel.value[
+        dialogStore.$state.labelFieldDialog.index
       ].required = required.value;
       dialogStore.$state.labelFieldDialog.isAppear = false;
     }
   }
 };
+
+watchEffect(() => {
+  if (formBuilderStore.$state.formFields.length !== 0) {
+    formBuilderStoreLabel.value = formBuilderStore.$state.formFields
+
+  }
+  // const formBuilderStoreLabel: any = ref(formBuilderStore.$state.formFields);
+})
 </script>
 
 <template>

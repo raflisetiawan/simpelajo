@@ -8,17 +8,14 @@ import { ref } from "vue";
 
 const dialogStore = useDialogStore();
 const formBuilderStore = useFormBuilderStore();
-const props = defineProps({
-  labelField: String,
-  index: Number,
-});
+const props = defineProps(['labelField', 'index']);
 const model = ref("");
 
-const editTextFieldContents = (value: any) => {
+const editTextFieldContents = (value: number) => {
+  dialogStore.$state.labelFieldDialog.index = value;
   dialogStore.$state.labelFieldDialog.isAppear =
     !dialogStore.$state.labelFieldDialog.isAppear;
   dialogStore.$state.labelFieldDialog.action = "edit";
-  dialogStore.$state.labelFieldDialog.index = value;
 };
 </script>
 

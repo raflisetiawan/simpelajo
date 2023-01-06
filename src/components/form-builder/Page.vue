@@ -17,12 +17,13 @@ import { getAllForms } from "@/services/admin/form";
 import NumberField from "../number/NumberField.vue";
 
 const formBuilderStore = useFormBuilderStore();
-const formFields: any = ref(formBuilderStore.$state.formFields);
+formBuilderStore.$state.formFields = [{} = {}];
 const loadingFormUpdate = ref(true);
 
 const route: any = useRoute()
 const service: any = ref()
 const serviceName: any = ref([])
+const formFields: any = ref(formBuilderStore.$state.formFields);
 onMounted(async () => {
   if (route.params.id !== undefined) {
     service.value = await getService(route.params.id);
@@ -35,7 +36,6 @@ onMounted(async () => {
       loadingFormUpdate.value = false;
     }
   } else {
-    formBuilderStore.$state.formFields = [{} = {}];
     const response = await getAllServices();
     const forms: any = await getAllForms();
     const filteredService = response.filter((elem: { id: any; }) => !forms.find(({ data: { } }) => elem.id === route.params.id));

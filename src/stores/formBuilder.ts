@@ -1,7 +1,5 @@
 import { defineStore } from "pinia";
-
 export const useFormBuilderStore = defineStore("formBuilder", {
-  
   state: () => ({
     formFields: [{} = {}],
     checkboxOption: [],
@@ -21,5 +19,13 @@ export const useFormBuilderStore = defineStore("formBuilder", {
       const formFields: any = this.formFields
       formFields.textInput = data;
     },
+
+    setFormFields(label: string, index: any, required: boolean){
+      this.formFields[index] = {
+        label,
+        required
+      }
+      console.log(this.formFields[index]);
+    }
   },
 });

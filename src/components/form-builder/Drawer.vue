@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { useDialogStore } from "@/stores/dialogs";
 import { useFormBuilderStore } from "@/stores/formBuilder";
 import DialogTextField from "./DialogLabel.vue";
@@ -23,6 +23,7 @@ const dialogStore = useDialogStore();
 const formBuilderStore = useFormBuilderStore();
 const router = useRouter()
 const quasar = useQuasar()
+const editLoading = ref(false);
 
 onMounted(() => {
   formBuilderStore.$state.selectOption = "Pilih Layanan Administrasi"
@@ -154,10 +155,17 @@ const onUpdate = async () => {
     return false;
   }
   else {
+    editLoading.value = true;
     await editForm(formBuilderStore.$state.formFields, route.params.id)
-    formBuilderStore.$state.formFields = [{}];
-    // router.push({ name: "CreateFormService", params: { slug } })
-
+    try {
+      const serviceData: any = await getService(route.params.id);
+      editLoading.value = false;
+      formBuilderStore.$state.formFields = [{}];
+      router.push({ name: "CreateFormService", params: { slug: serviceData.slug } })
+    } catch (error) {
+      console.log(error);
+      editLoading.value = false;
+    }
   }
 
 }
@@ -175,10 +183,10 @@ const onUpdate = async () => {
     <q-btn label="Date" outline icon="calendar_month" class="q-ml-sm q-mt-sm" @click="onClickDate" />
     <q-btn label="Dropdown" outline icon="arrow_drop_down" class="q-ml-sm q-mt-sm" @click="onClickDropdown" />
     <q-btn label="Phone" outline icon="phone" class="q-ml-sm q-mt-sm" @click="onClickPhone" />
-    <q-btn label="File upload" outline icon="cloud_upload" class="q-ml-sm q-mt-sm" @click="onClickFileUpload" />
+    <q-btn label="File upload" disable outline icon="cloud_upload" class="q-ml-sm q-mt-sm" @click="onClickFileUpload" />
     <q-btn label="Number" outline icon="pin" class="q-ml-sm q-mt-sm" @click="onClickNumber" />
     <q-space />
-    <q-btn label="Edit" color="primary" class="q-mt-md q-ml-sm" @click="onUpdate"
+    <q-btn label="Edit" color="primary" class="q-mt-md q-ml-sm" @click="onUpdate" :loading="editLoading"
       v-if="route.name == 'UpdateFormById'" />
     <q-btn label="Submit" v-else color="primary" class="q-mt-md q-ml-sm" @click="onSubmit" />
     <DialogTextField />
