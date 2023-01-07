@@ -85,7 +85,6 @@ const getServiceHasNotFormData = async (id: string) => {
 
 const editForm = async (data: any, serviceId: string) => {
   const service: any = await getFormByServiceId(serviceId);
-  console.log(service);
   const formRef = doc(db, "forms", service.id);
 
   await updateDoc(formRef, {

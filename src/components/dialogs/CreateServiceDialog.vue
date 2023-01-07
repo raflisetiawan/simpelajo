@@ -3,7 +3,9 @@ import { ref } from "vue";
 import { useFormBuilderStore } from "@/stores/formBuilder"
 import slugify from "slugify";
 import { createService, updateService } from "@/services/admin/service";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const serviceName = ref("")
 const letterNumber = ref(true);
 const isServiceTitleDuplicate = ref(false)
@@ -45,6 +47,11 @@ const onCancel = () => {
     formBuilderStore.$state.editServiceDialog.isDialog = false;
 }
 
+const redirectToFormBuilder = (serviceId: string) => {
+    router.push({ name: 'UpdateFormById', params: { id: serviceId } });
+    formBuilderStore.$state.createServiceDialog = false;
+}
+
 const formBuilderStore = useFormBuilderStore();
 </script>
 <template>
@@ -77,7 +84,7 @@ const formBuilderStore = useFormBuilderStore();
                 </q-card-section>
                 <q-card-section class="q-pt-none">
                     <q-btn v-if="formBuilderStore.$state.editServiceDialog.isDialog" class="bg-primary text-white"
-                        :to="{ name: 'UpdateFormById', params: { id: formBuilderStore.$state.editServiceDialog.id } }">Edit
+                        @click="redirectToFormBuilder(formBuilderStore.$state.editServiceDialog.id)">Edit
                         Form</q-btn>
                 </q-card-section>
 
