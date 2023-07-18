@@ -29,7 +29,8 @@
     "vue": "^3.2.45",
     "vue-easy-lightbox": "^1.11.0",
     "vue-lazyload": "^3.0.0-rc.2",
-    "vue-router": "^4.1.6"
+    "vue-router": "^4.1.6",
+    "vue-scrollto": "^2.20.0"
   },
   "devDependencies": {
     "@quasar/vite-plugin": "^1.2.3",

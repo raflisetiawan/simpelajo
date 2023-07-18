@@ -11,6 +11,7 @@ import router from './router';
 import { getMessaging } from 'firebase/messaging';
 import VueLazyLoad from 'vue-lazyload'
 import VueLigthbox from "vue-easy-lightbox";
+import VueScrollTo from "vue-scrollto";
 
 
 const app = createApp(App)
@@ -19,6 +20,7 @@ app.use(createPinia());
 firebaseConfig;
 getMessaging(firebaseConfig);
 app.use(router);
+app.use(VueScrollTo);
 app.use(Quasar, {
     plugins: { Dialog, Notify }, // import Quasar plugins and add here
   });

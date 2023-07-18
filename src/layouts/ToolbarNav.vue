@@ -7,9 +7,8 @@ const toHome = () => router.push({ name: 'Home' })
 const userStore = useUserStore();
 </script>
 <template>
-  <q-toolbar :class="
-    $q.screen.lt.sm ? `container justify-evenly full-width` : `container`
-  ">
+  <q-toolbar :class="$q.screen.lt.sm ? `container justify-evenly full-width` : `container`
+    ">
     <q-toolbar-title v-if="$q.screen.gt.xs">
       <q-avatar @click="toHome" style="cursor: pointer">
         <img src="../assets/dACACA-removebg-preview.png" alt="Logo">
@@ -22,7 +21,8 @@ const userStore = useUserStore();
       :to="{ name: 'Services' }" />
     <q-btn flat dense label="Keluhan" :class="$q.screen.gt.xs ? `q-px-md black-text` : `black-text`"
       :to="{ name: 'Keluhan' }" />
-    <q-btn flat dense label="Hubungi" to="/#hubungi" :class="$q.screen.gt.xs ? `q-px-md black-text` : `black-text`" />
+    <q-btn flat dense label="Hubungi" v-scroll-to="'#hubungi'" to="/"
+      :class="$q.screen.gt.xs ? `q-px-md black-text` : `black-text`" />
     <ThreePoints v-if="userStore.$state.user !== null" />
     <q-btn v-else icon="login" flat dense :to="{ name: 'SignIn' }"></q-btn>
     <!-- <SignOutButton v-if="userStore.$state.user !== null" /> -->
